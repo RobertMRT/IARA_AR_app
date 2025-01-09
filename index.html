@@ -1,0 +1,275 @@
+<!-- BEGIN: Top HTML -->
+<!DOCTYPE html>
+<!-- include aframe -->
+<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<!-- include ar.js -->
+<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+<!-- to load .ply model -->
+<script src="https://rawgit.com/donmccurdy/aframe-extras/v6.0.0/dist/aframe-extras.loaders.min.js"></script>
+
+<!-- END: Top HTML -->
+<!-- BEGIN: Unity Compiled Events -->
+<script>
+var markerFound = 0;
+var Electrone1_0_CurrentPoint = 0;
+var Electrone1_0_SubtractTime = 0;
+var Electrone1_0_PointsArray = [new THREE.Vector3(0,0.125,0),new THREE.Vector3(-0.675,0.125,0),new THREE.Vector3(-0.675,1.37825,0),new THREE.Vector3(0,1.37825,0),new THREE.Vector3(0.675,1.37825,0),new THREE.Vector3(0.675,0.125,0),new THREE.Vector3(0,0.125,0)];
+var Electrone2_1_CurrentPoint = 0;
+var Electrone2_1_SubtractTime = 0;
+var Electrone2_1_PointsArray = [new THREE.Vector3(0,0.7,-0.6),new THREE.Vector3(-0.8099999,0.7,-0.6),new THREE.Vector3(-0.8055,0.7,0.588),new THREE.Vector3(0,0.7,0.588),new THREE.Vector3(0.8055,0.7,0.588),new THREE.Vector3(0.87525,0.7,-0.6),new THREE.Vector3(0,0.7,-0.6)];
+var Electrone3_2_CurrentPoint = 0;
+var Electrone3_2_SubtractTime = 0;
+var Electrone3_2_PointsArray = [new THREE.Vector3(0.3,0.3,-0.3),new THREE.Vector3(-0.25575,0.3,-0.957),new THREE.Vector3(-1.095,1.0875,-0.453),new THREE.Vector3(-0.555,1.0875,0.384),new THREE.Vector3(0.174,1.0875,1.23),new THREE.Vector3(0.84,0.3,0.3075),new THREE.Vector3(0.3,0.3,-0.3)];
+var Electrone4_3_CurrentPoint = 0;
+var Electrone4_3_SubtractTime = 0;
+var Electrone4_3_PointsArray = [new THREE.Vector3(-0.3,0.3,0.3),new THREE.Vector3(0.25575,0.3,0.957),new THREE.Vector3(0.978,1.046775,0.318),new THREE.Vector3(0.438,1.046775,-0.39525),new THREE.Vector3(-0.2055,1.046775,-0.9375),new THREE.Vector3(-0.84,0.3,-0.3075),new THREE.Vector3(-0.3,0.3,0.3)];
+var Electrone5_4_CurrentPoint = 0;
+var Electrone5_4_SubtractTime = 0;
+var Electrone5_4_PointsArray = [new THREE.Vector3(0,0.7,0.6),new THREE.Vector3(0,-0.2,0.6),new THREE.Vector3(0,-0.2,-0.6037499),new THREE.Vector3(0,0.7,-0.6037499),new THREE.Vector3(0,1.6,-0.6037499),new THREE.Vector3(0,1.6,0.6),new THREE.Vector3(0,0.7,0.6)];
+AFRAME.registerComponent('button', {
+init: function () {
+var elem = document.documentElement;
+var marker = document.querySelector("#marker");
+var fullbutton = document.querySelector("#fullscreen");
+marker.addEventListener("markerFound", function (evt) {
+markerFound = 1;
+});
+marker.addEventListener("markerLost", function (evt) {
+markerFound = 0;
+});
+
+        fullbutton.addEventListener("click", function (evt) {
+            if (fullscreen == 0) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                    /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                    /* Chrome, Safari and Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                    /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+            fullbutton.setAttribute("src", "../exit_fullscreen.png");
+            fullscreen = 1;
+            } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                }
+                fullbutton.setAttribute("src", "../fullscreen.png");
+                fullscreen = 0;
+            }
+        });
+},
+tick: function (totalTime, deltaTime) {
+var Electrone1_0 = document.querySelector(".electrone1");
+var Electrone1_0_Speed = 0.4166667;
+var Electrone1_0_Time = (totalTime - Electrone1_0_SubtractTime) / 1000;
+var Electrone2_1 = document.querySelector(".electrone2");
+var Electrone2_1_Speed = 0.4166667;
+var Electrone2_1_Time = (totalTime - Electrone2_1_SubtractTime) / 1000;
+var Electrone3_2 = document.querySelector(".electrone3");
+var Electrone3_2_Speed = 0.4166667;
+var Electrone3_2_Time = (totalTime - Electrone3_2_SubtractTime) / 1000;
+var Electrone4_3 = document.querySelector(".electrone4");
+var Electrone4_3_Speed = 0.4166667;
+var Electrone4_3_Time = (totalTime - Electrone4_3_SubtractTime) / 1000;
+var Electrone5_4 = document.querySelector(".electrone5");
+var Electrone5_4_Speed = 0.4166667;
+var Electrone5_4_Time = (totalTime - Electrone5_4_SubtractTime) / 1000;
+var dTime = deltaTime / 1000;
+
+if (markerFound == 1) {
+Electrone1_0_Update();
+Electrone2_1_Update();
+Electrone3_2_Update();
+Electrone4_3_Update();
+Electrone5_4_Update();
+}
+
+
+            function Electrone1_0_Update() {
+                var newPosition = bezierPath(Electrone1_0_PointsArray[Electrone1_0_CurrentPoint], Electrone1_0_PointsArray[Electrone1_0_CurrentPoint + 1], Electrone1_0_PointsArray[Electrone1_0_CurrentPoint + 2], Electrone1_0_PointsArray[Electrone1_0_CurrentPoint + 3], Electrone1_0_Time *Electrone1_0_Speed);
+                if (Electrone1_0_Time*Electrone1_0_Speed>1) {
+                    Electrone1_0_CurrentPoint += 3;
+                    Electrone1_0_SubtractTime = totalTime;
+                    if (Electrone1_0_CurrentPoint >= Electrone1_0_PointsArray.length - 3) {
+                        Electrone1_0_CurrentPoint = 0;
+                    }
+                }
+
+
+                Electrone1_0.setAttribute('position', {
+                    x: newPosition.x,
+                    y: newPosition.y,
+                    z: newPosition.z,
+                });
+            }
+        
+
+            function Electrone2_1_Update() {
+                var newPosition = bezierPath(Electrone2_1_PointsArray[Electrone2_1_CurrentPoint], Electrone2_1_PointsArray[Electrone2_1_CurrentPoint + 1], Electrone2_1_PointsArray[Electrone2_1_CurrentPoint + 2], Electrone2_1_PointsArray[Electrone2_1_CurrentPoint + 3], Electrone2_1_Time *Electrone2_1_Speed);
+                if (Electrone2_1_Time*Electrone2_1_Speed>1) {
+                    Electrone2_1_CurrentPoint += 3;
+                    Electrone2_1_SubtractTime = totalTime;
+                    if (Electrone2_1_CurrentPoint >= Electrone2_1_PointsArray.length - 3) {
+                        Electrone2_1_CurrentPoint = 0;
+                    }
+                }
+
+
+                Electrone2_1.setAttribute('position', {
+                    x: newPosition.x,
+                    y: newPosition.y,
+                    z: newPosition.z,
+                });
+            }
+        
+
+            function Electrone3_2_Update() {
+                var newPosition = bezierPath(Electrone3_2_PointsArray[Electrone3_2_CurrentPoint], Electrone3_2_PointsArray[Electrone3_2_CurrentPoint + 1], Electrone3_2_PointsArray[Electrone3_2_CurrentPoint + 2], Electrone3_2_PointsArray[Electrone3_2_CurrentPoint + 3], Electrone3_2_Time *Electrone3_2_Speed);
+                if (Electrone3_2_Time*Electrone3_2_Speed>1) {
+                    Electrone3_2_CurrentPoint += 3;
+                    Electrone3_2_SubtractTime = totalTime;
+                    if (Electrone3_2_CurrentPoint >= Electrone3_2_PointsArray.length - 3) {
+                        Electrone3_2_CurrentPoint = 0;
+                    }
+                }
+
+
+                Electrone3_2.setAttribute('position', {
+                    x: newPosition.x,
+                    y: newPosition.y,
+                    z: newPosition.z,
+                });
+            }
+        
+
+            function Electrone4_3_Update() {
+                var newPosition = bezierPath(Electrone4_3_PointsArray[Electrone4_3_CurrentPoint], Electrone4_3_PointsArray[Electrone4_3_CurrentPoint + 1], Electrone4_3_PointsArray[Electrone4_3_CurrentPoint + 2], Electrone4_3_PointsArray[Electrone4_3_CurrentPoint + 3], Electrone4_3_Time *Electrone4_3_Speed);
+                if (Electrone4_3_Time*Electrone4_3_Speed>1) {
+                    Electrone4_3_CurrentPoint += 3;
+                    Electrone4_3_SubtractTime = totalTime;
+                    if (Electrone4_3_CurrentPoint >= Electrone4_3_PointsArray.length - 3) {
+                        Electrone4_3_CurrentPoint = 0;
+                    }
+                }
+
+
+                Electrone4_3.setAttribute('position', {
+                    x: newPosition.x,
+                    y: newPosition.y,
+                    z: newPosition.z,
+                });
+            }
+        
+
+            function Electrone5_4_Update() {
+                var newPosition = bezierPath(Electrone5_4_PointsArray[Electrone5_4_CurrentPoint], Electrone5_4_PointsArray[Electrone5_4_CurrentPoint + 1], Electrone5_4_PointsArray[Electrone5_4_CurrentPoint + 2], Electrone5_4_PointsArray[Electrone5_4_CurrentPoint + 3], Electrone5_4_Time *Electrone5_4_Speed);
+                if (Electrone5_4_Time*Electrone5_4_Speed>1) {
+                    Electrone5_4_CurrentPoint += 3;
+                    Electrone5_4_SubtractTime = totalTime;
+                    if (Electrone5_4_CurrentPoint >= Electrone5_4_PointsArray.length - 3) {
+                        Electrone5_4_CurrentPoint = 0;
+                    }
+                }
+
+
+                Electrone5_4.setAttribute('position', {
+                    x: newPosition.x,
+                    y: newPosition.y,
+                    z: newPosition.z,
+                });
+            }
+        
+
+        function bezierEvaluate(p0, p1, p2, p3, t) {
+            var u = (1 - t);                
+            var uu = u * u;                
+            var uuu = u * u * u;               
+            var tt = t * t;               
+            var ttt = t * t * t;               
+            //B(t) = (1-t)^3*P0 3*(1-t)^2*t*P1 3*(1-t)*t^2*P2 t^3*P3 , 0 < t < 1               
+            return (uuu * p0 + 3 * uu * t * p1 + 3 * u * tt * p2 + ttt * p3);          
+        }          
+        function bezierPath(p0, p1, p2, p3, t) {               
+            return new THREE.Vector3(                   
+                bezierEvaluate(p0.x, p1.x, p2.x, p3.x, t),                   
+                bezierEvaluate(p0.y, p1.y, p2.y, p3.y, t),                   
+                bezierEvaluate(p0.z, p1.z, p2.z, p3.z, t)               
+            );           
+        }     
+    }
+});
+</script>
+<!-- END: Unity Compiled Events -->
+
+<!-- BEGIN: Middle HTML -->
+<body style='margin : 0px; overflow: hidden; font-family: Monospace;'>
+
+        <div style='position: absolute; bottom: 5px; left: 30px; width:100%; text-align: right; z-index: 1;'>
+            <input type="image" id="fullscreen" src="../fullscreen.png" style='position: absolute; bottom: 0px; right: 35px;'>
+            </input>
+        </div>
+
+        <!-- <a-scene embedded arjs='debugUIEnabled: false; sourceType: video; sourceUrl:../../data/videos/headtracking.mp4;'> -->
+            <a-scene embedded arjs='debugUIEnabled: false; sourceType: webcam' vr-mode-ui='enabled: false'>
+            <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .intersectable; useWorldCoordinates: true;"></a-entity>
+<!-- END: Middle HTML -->
+
+<!-- BEGIN: Unity Compiled Assets -->
+<a-assets>
+</a-assets>
+<!-- END: Unity Compiled Assets -->
+<!-- BEGIN: Add Image Target (marker) -->
+<a-marker id="marker" preset="hiro" emitevents="true" button>
+<!-- END: Add Image Target (marker) -->
+
+<!-- BEGIN: Unity Compiled Objects -->
+<a-sphere radius="0.1125" class="electrone1" position="0 0.125 0" rotation="0 0 0" color="#00C50D" 
+></a-sphere>
+<a-sphere radius="0.1125" class="electrone2" position="0 0.7 -0.6" rotation="0 0 0" color="#00C50D" 
+></a-sphere>
+<a-sphere radius="0.1125" class="electrone3" position="0.3 0.3 -0.3" rotation="0 0 0" color="#00C50D" 
+></a-sphere>
+<a-sphere radius="0.1125" class="electrone4" position="-0.3 0.3 0.3" rotation="0 0 0" color="#00C50D" 
+></a-sphere>
+<a-sphere radius="0.1125" class="electrone5" position="0 0.7 0.6" rotation="0 0 0" color="#00C50D" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0 0.9350001 0" rotation="0 0 0" color="#E90000" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="-0.158 0.7747 0" rotation="0 0 0" color="#E90000" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.023 0.7450001 0.141" rotation="0 0 0" color="#E90000" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.1038 0.8168001 -0.1518" rotation="0 0 0" color="#E90000" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.135 0.554 -0.053" rotation="0 0 0" color="#E90000" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.189 0.746 0.009000001" rotation="0 0 0" color="#0014E9" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.013 0.548 0.094" rotation="0 0 0" color="#0014E9" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="-0.114 0.596 -0.043" rotation="0 0 0" color="#0014E9" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="0.0226 0.6893 -0.12" rotation="0 0 0" color="#0014E9" 
+></a-sphere>
+<a-sphere radius="0.15" class="intersectable" position="-0.107 0.809 -0.168" rotation="0 0 0" color="#0014E9" 
+></a-sphere>
+<!-- END: Unity Compiled Objects -->
+
+<!-- BEGIN: Bottom HTML -->
+</a-marker>
+<a-entity camera></a-entity>
+</a-scene>
+</body>
+</html><!-- END: Bottom HTML -->
